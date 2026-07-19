@@ -92,6 +92,18 @@ const PKGS = {
   },
 };
 
+/* Default "Things to Consider" sections — shown as a final page on the
+   receipt. Each client starts with these 5; edit, remove, or add more
+   from the sidebar. Change the defaults here if you want new quotations
+   to start with different standard text. */
+const DEFAULT_CONSIDERATIONS = [
+  "Advance paid is strictly non-refundable in case of cancellation.",
+  "Conveyance charges are extra and will be added as per the client's location.",
+  "Trial sessions, if required, must be scheduled at least 7 days prior to the event.",
+  "Reporting time is fixed in advance; please share the exact event schedule to avoid last-minute delays.",
+  "Balance payment must be cleared in full on the day of the service, before the makeup session begins.",
+];
+
 /* Contact info shown in receipt footer — edit to customise */
 const CONTACT = {
   phone1: "+91-8107654303",
