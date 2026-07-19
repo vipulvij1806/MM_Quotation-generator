@@ -5,12 +5,54 @@
 
 /* ─── State ─────────────────────────────────────────── */
 let dateCounter = 0;
-const STATE = { dates: [] };
+let noteCounter = 0;
+const STATE = { dates: [], notes: [] };
 
 /* ─── Initialise ────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   addDate();
+  renderNotes();
 });
+
+/* ─── Note helpers ──────────────────────────────────– */
+function addNote() {
+  const id = "n" + noteCounter++;
+  STATE.notes.push({ id, text: "" });
+  renderNotes();
+}
+
+function removeNote(id) {
+  STATE.notes = STATE.notes.filter((n) => n.id !== id);
+  renderNotes();
+}
+
+function setNoteText(id, value) {
+  const n = STATE.notes.find((x) => x.id === id);
+  if (n) n.text = value;
+}
+
+function renderNotes() {
+  const list = document.getElementById("notesList");
+  list.innerHTML = "";
+
+  STATE.notes.forEach((note, index) => {
+    const noteBlock = document.createElement("div");
+    noteBlock.className = "note-block";
+    noteBlock.innerHTML = `
+      <div class="note-header">
+        <span class="note-label">Note ${index + 1}</span>
+        <button class="rm-btn" aria-label="Remove note" onclick="removeNote('${note.id}')">×</button>
+      </div>
+      <div class="field">
+        <input type="text" class="note-input" value="${note.text}"
+          placeholder="e.g. Bring HD makeup kit"
+          onchange="setNoteText('${note.id}', this.value)"
+          onkeyup="setNoteText('${note.id}', this.value)" />
+      </div>
+    `;
+    list.appendChild(noteBlock);
+  });
+}
 
 /* ─── Date helpers ──────────────────────────────────── */
 function addDate() {
@@ -368,17 +410,40 @@ function generate() {
     name, phone, note, qno, today
   );
 
+  // Build notes section
+  const activeNotes = STATE.notes.filter((n) => n.text.trim());
+  let notesSection = "";
+  if (activeNotes.length > 0) {
+    notesSection = `<div class="r-notes-section">
+      <strong>Things to Consider:</strong>
+      <ul class="r-notes-list">
+        ${activeNotes.map((n) => `<li>${n.text}</li>`).join("")}
+      </ul>
+    </div>`;
+  }
+
   const preview = document.getElementById("previewArea");
   preview.innerHTML = `
-    <button class="print-btn no-print" onclick="window.print()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 6 2 18 2 18 9"/>
-        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-        <rect x="6" y="14" width="12" height="8"/>
-      </svg>
-      Save as PDF / Print
-    </button>
+    <div class="action-buttons no-print">
+      <button class="print-btn" onclick="window.print()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 6 2 18 2 18 9"/>
+          <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+          <rect x="6" y="14" width="12" height="8"/>
+        </svg>
+        Print
+      </button>
+      <button class="pdf-btn" onclick="savePDF('${qno.replace(/"/g, '\\"')}', '${name.replace(/"/g, '\\"')}')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        Save as PDF
+      </button>
+    </div>
 
     <div id="receipt">
 
@@ -414,6 +479,8 @@ function generate() {
 
       ${note ? `<div class="r-note"><strong>Note:</strong> ${note}</div>` : ""}
 
+      ${notesSection}
+
       <div class="r-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
 
       <div class="r-footer">
@@ -425,4 +492,28 @@ function generate() {
 
     </div>
   `;
+}
+
+/* ─── PDF Save functionality ─────────────────────────── */
+function savePDF(qno, clientName) {
+  const receiptElement = document.getElementById("receipt");
+  if (!receiptElement) {
+    alert("No quotation to save. Please generate a quotation first.");
+    return;
+  }
+
+  // Generate filename with client name and quotation number
+  const timestamp = new Date().toISOString().slice(0, 10);
+  const cleanName = clientName.substring(0, 15).replace(/[^a-zA-Z0-9]/g, "");
+  const filename = `MM_Quotation_${cleanName}_${qno}_${timestamp}.pdf`;
+
+  const options = {
+    margin: 10,
+    filename: filename,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { orientation: "portrait", unit: "mm", format: "a4" },
+  };
+
+  html2pdf().set(options).from(receiptElement).save();
 }
