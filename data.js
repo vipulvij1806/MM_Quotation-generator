@@ -17,6 +17,7 @@ const PKGS = {
     qty: false,
     guestField: false,
     artistField: false,
+    editable: true,
   },
   hd: {
     label: "HD Guest Makeup",
@@ -34,6 +35,7 @@ const PKGS = {
     note: "False eyelashes & lenses included.",
     guestField: false,
     artistField: false,
+    editable: true,
   },
   basic: {
     label: "Basic Guest Makeup",
@@ -48,9 +50,9 @@ const PKGS = {
       { k: "hairDrape", l: "Hair + Draping",          d: 2000 },
     ],
     qty: true,
-   note: "False eyelashes & lenses included.",
     guestField: false,
     artistField: false,
+    editable: true,
   },
   special: {
     label: "Special Guest Price",
@@ -60,9 +62,9 @@ const PKGS = {
       { k: "special", l: "Special look", d: 0 },
     ],
     qty: true,
-        note: "False eyelashes & lenses included.",
     guestField: false,
     artistField: false,
+    editable: true,
   },
   salon: {
     label: "Salon Package",
@@ -74,6 +76,7 @@ const PKGS = {
     qty: false,
     guestField: true,
     artistField: false,
+    editable: true,
   },
   artist: {
     label: "Per Artist Rate",
@@ -83,9 +86,9 @@ const PKGS = {
       { k: "rate", l: "Rate per artist", d: 0 },
     ],
     qty: false,
-        note: "False eyelashes & lenses included.",
     guestField: false,
     artistField: true,
+    editable: true,
   },
 };
 
@@ -94,4 +97,6 @@ const CONTACT = {
   phone1: "+91-8107654303",
   phone2: "+91-9886008604",
   tagline: "Thank you for choosing us ✦",
+  instagram: "https://instagram.com/monika_makeovers", // Update with actual link
+  wedme: "https://wedme.in/monika-makeovers", // Update with actual link
 };
