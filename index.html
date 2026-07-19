@@ -29,18 +29,18 @@
     <div class="s-section-head">Client Details</div>
 
     <div class="field">
-      <label class="lbl" for="cName">Client Name</label>
-      <input type="text" id="cName" placeholder="e.g. Priya Sharma" />
+      <label class="lbl" for="cName">Client Name <span class="required-mark">*</span></label>
+      <input type="text" id="cName" placeholder="e.g. Priya Sharma" required />
     </div>
 
     <div class="field">
-      <label class="lbl" for="cPhone">Phone / WhatsApp</label>
-      <input type="text" id="cPhone" placeholder="+91 98765 43210" />
+      <label class="lbl" for="cPhone">Phone / WhatsApp <span class="required-mark">*</span></label>
+      <input type="text" id="cPhone" placeholder="+91 98765 43210" required />
     </div>
 
     <div class="field">
-      <label class="lbl" for="cLocation">Location</label>
-      <input type="text" id="cLocation" placeholder="e.g. Bangalore, Mumbai" />
+      <label class="lbl" for="cLocation">Location <span class="required-mark">*</span></label>
+      <input type="text" id="cLocation" placeholder="e.g. Bangalore, Mumbai" required />
     </div>
 
     <div class="field">
@@ -51,6 +51,10 @@
     <div class="s-section-head" style="margin-top:6px">Dates &amp; Events</div>
     <div id="datesList"></div>
     <button class="add-date-btn" onclick="addDate()">+ Add Date</button>
+
+    <div class="s-section-head" style="margin-top:6px">Things to Consider <span style="text-transform:none;font-weight:400">(final page)</span></div>
+    <div id="considerationsList"></div>
+    <button class="add-date-btn" onclick="addConsiderationSection()">+ Add Section</button>
 
     <button class="gen-btn" onclick="generate()">✦ Generate Quotation</button>
 
