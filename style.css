@@ -118,6 +118,31 @@ select {
 input:focus, textarea:focus { border-color: var(--teal); }
 textarea { resize: vertical; }
 
+/* ── Note blocks ────────────────────────────────────── */
+.note-block {
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid var(--rose);
+  border-radius: 7px;
+  padding: 9px;
+  margin-bottom: 6px;
+}
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 7px;
+}
+.note-label {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px;
+  color: var(--teal-dark);
+  font-weight: 600;
+}
+.note-input {
+  font-size: 11px !important;
+  padding: 5px 8px !important;
+}
+
 /* ── Date blocks ─────────────────────────────────────── */
 .date-block {
   background: rgba(255, 255, 255, .55);
@@ -236,7 +261,7 @@ textarea { resize: vertical; }
 .discount-input { border-color: #e8d090 !important; }
 
 /* ── Add / generate buttons ──────────────────────────── */
-.add-btn, .add-date-btn {
+.add-btn, .add-date-btn, .add-note-btn {
   background: rgba(255, 255, 255, .6);
   border: 1px dashed var(--rose);
   border-radius: 5px;
@@ -250,7 +275,7 @@ textarea { resize: vertical; }
   transition: all .15s;
   margin-top: 4px;
 }
-.add-btn:hover, .add-date-btn:hover {
+.add-btn:hover, .add-date-btn:hover, .add-note-btn:hover {
   background: var(--teal-bg);
   border-color: var(--teal);
 }
@@ -291,8 +316,15 @@ textarea { resize: vertical; }
 }
 .empty-icon { font-size: 36px; margin-bottom: 12px; }
 
-/* ── Print / Save PDF button ─────────────────────────── */
-.print-btn {
+/* ── Action buttons container ────────────────────────── */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+/* ── Print / Save PDF buttons ────────────────────────── */
+.print-btn, .pdf-btn {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -304,11 +336,16 @@ textarea { resize: vertical; }
   font-family: 'Playfair Display', serif;
   font-size: 13px;
   cursor: pointer;
-  margin-bottom: 18px;
   letter-spacing: .05em;
   transition: background .2s;
 }
-.print-btn:hover { background: #1a4a57; }
+.print-btn:hover, .pdf-btn:hover { background: #1a4a57; }
+.pdf-btn {
+  background: #8b5a3c;
+}
+.pdf-btn:hover {
+  background: #6d4630;
+}
 
 /* ════════════════════════════════════════════════════════
    RECEIPT STYLES
@@ -499,6 +536,29 @@ textarea { resize: vertical; }
   border-top: 1px solid #f0d0da;
 }
 
+/* Notes section */
+.r-notes-section {
+  padding: 12px 28px;
+  font-size: 11px;
+  color: var(--text-muted);
+  border-top: 1px solid #f0d0da;
+}
+.r-notes-section strong {
+  display: block;
+  color: var(--teal-dark);
+  margin-bottom: 6px;
+  font-style: italic;
+}
+.r-notes-list {
+  margin-left: 16px;
+  padding: 0;
+  line-height: 1.6;
+}
+.r-notes-list li {
+  margin-bottom: 4px;
+  color: var(--text-muted);
+}
+
 /* Ornament */
 .r-ornament {
   text-align: center;
@@ -540,7 +600,9 @@ textarea { resize: vertical; }
 
   /* Hide everything except the receipt */
   .sidebar,
+  .action-buttons,
   .print-btn,
+  .pdf-btn,
   .empty-state,
   .no-print {
     display: none !important;
@@ -598,4 +660,12 @@ textarea { resize: vertical; }
     border-bottom: 1px solid var(--rose);
   }
   .preview { padding: 16px 10px; }
+  .action-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .print-btn, .pdf-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
