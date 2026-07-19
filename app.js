@@ -6,12 +6,21 @@
 /* ─── State ─────────────────────────────────────────── */
 let dateCounter = 0;
 let itemCounter = 0;
-const STATE = { dates: [] };
+let considerationCounter = 0;
+const STATE = { dates: [], considerations: [] };
 
 /* ─── Initialise ────────────────────────────────────── */
 document.addEventListener("DOMContentLoaded", () => {
   addDate();
+  initDefaultConsiderations();
+  renderSidebar();
   loadSavedQuotations();
+
+  // Clear the red "missing field" highlight as soon as the person starts typing
+  ["cName", "cPhone", "cLocation"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", () => el.classList.remove("field-error"));
+  });
 });
 
 /* ─── LocalStorage & Save/Load ──────────────────────── */
@@ -67,10 +76,12 @@ function loadQuotationFromStorage(id) {
 
   // Load state
   Object.assign(STATE, JSON.parse(JSON.stringify(quotation.state)));
+  if (!STATE.considerations) initDefaultConsiderations(); // older saves won't have this field
 
   // Reset counters
   dateCounter = 0;
   itemCounter = 0;
+  considerationCounter = (STATE.considerations || []).length;
 
   renderSidebar();
   alert(`✓ Quotation "${quotation.name}" loaded. Make your changes and click "Generate Quotation" again.`);
@@ -158,10 +169,12 @@ function importQuotationFromJSON(file) {
 
       // Load state
       Object.assign(STATE, JSON.parse(JSON.stringify(data.state)));
+      if (!STATE.considerations) initDefaultConsiderations(); // older/foreign files won't have this field
 
       // Reset counters
       dateCounter = 0;
       itemCounter = 0;
+      considerationCounter = (STATE.considerations || []).length;
 
       renderSidebar();
       alert("✓ Quotation imported successfully. Make your changes and click \"Generate Quotation\" again.");
@@ -170,6 +183,31 @@ function importQuotationFromJSON(file) {
     }
   };
   reader.readAsText(file);
+}
+
+/* ─── Mandatory field validation ─────────────────────── */
+function validateRequiredFields() {
+  const requiredIds = ["cName", "cPhone", "cLocation"];
+  let valid = true;
+  let firstInvalid = null;
+
+  requiredIds.forEach((id) => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.classList.add("field-error");
+      valid = false;
+      if (!firstInvalid) firstInvalid = el;
+    } else {
+      el.classList.remove("field-error");
+    }
+  });
+
+  if (!valid) {
+    alert("Please fill in Client Name, Phone/WhatsApp, and Location before generating the quotation.");
+    if (firstInvalid) firstInvalid.focus();
+  }
+
+  return valid;
 }
 
 /* ─── Date helpers ──────────────────────────────────── */
@@ -306,6 +344,50 @@ function getEvent(dateId, eventId) {
     ?.events.find((e) => e.id === eventId);
 }
 
+/* ─── "Things to Consider" helpers ──────────────────── */
+function initDefaultConsiderations() {
+  STATE.considerations = DEFAULT_CONSIDERATIONS.map((text) => ({
+    id: "co" + considerationCounter++,
+    text,
+  }));
+}
+
+function addConsiderationSection() {
+  if (!STATE.considerations) STATE.considerations = [];
+  STATE.considerations.push({ id: "co" + considerationCounter++, text: "" });
+  renderSidebar();
+}
+
+function removeConsideration(id) {
+  STATE.considerations = (STATE.considerations || []).filter((c) => c.id !== id);
+  renderSidebar();
+}
+
+function setConsiderationText(id, value) {
+  const c = (STATE.considerations || []).find((x) => x.id === id);
+  if (c) c.text = value;
+}
+
+function renderConsiderations() {
+  const list = document.getElementById("considerationsList");
+  if (!list) return;
+  list.innerHTML = "";
+
+  (STATE.considerations || []).forEach((item, idx) => {
+    const row = document.createElement("div");
+    row.className = "consider-item";
+    row.innerHTML = `
+      <div class="consider-item-head">
+        <span class="consider-item-label">Section ${idx + 1}</span>
+        <button class="rm-btn" aria-label="Remove section" onclick="removeConsideration('${item.id}')">×</button>
+      </div>
+      <textarea rows="2" placeholder="e.g. Advance paid is non-refundable..."
+        onchange="setConsiderationText('${item.id}', this.value)">${item.text}</textarea>
+    `;
+    list.appendChild(row);
+  });
+}
+
 /* ─── Custom item helpers ───────────────────────────── */
 function addCustomItem(dateId, eventId, pk) {
   const ev = getEvent(dateId, eventId);
@@ -349,6 +431,8 @@ function setCustomItemField(dateId, eventId, pk, itemId, field, value) {
 
 /* ─── Sidebar renderer ──────────────────────────────── */
 function renderSidebar() {
+  renderConsiderations();
+
   const list = document.getElementById("datesList");
   list.innerHTML = "";
 
@@ -822,6 +906,8 @@ function generateFilename() {
 
 /* ─── Generate receipt ──────────────────────────────── */
 function generate() {
+  if (!validateRequiredFields()) return;
+
   const name     = document.getElementById("cName").value.trim()  || "Valued Client";
   const phone    = document.getElementById("cPhone").value.trim() || "";
   const location = document.getElementById("cLocation").value.trim() || "";
@@ -848,6 +934,16 @@ function generate() {
   const { html: body, grand, totalDates, totalEvts } = buildReceiptHTML(
     name, phone, location, note, qno, today
   );
+
+  const considerationItems = (STATE.considerations || []).filter((c) => c.text && c.text.trim());
+  const considerationsHTML = considerationItems.length
+    ? `<div class="r-considerations">
+        <div class="considerations-title">✦ Things to Consider ✦</div>
+        <ol class="considerations-list">
+          ${considerationItems.map((c) => `<li>${c.text.trim()}</li>`).join("")}
+        </ol>
+      </div>`
+    : "";
 
   const preview = document.getElementById("previewArea");
   const filename = generateFilename();
@@ -907,6 +1003,8 @@ function generate() {
       ${note ? `<div class="r-note"><strong>Note:</strong> ${note}</div>` : ""}
 
       <div class="r-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+      ${considerationsHTML}
 
       <div class="r-footer">
         <div class="r-footer-social">
