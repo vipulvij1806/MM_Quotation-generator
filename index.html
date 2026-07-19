@@ -39,27 +39,42 @@
     </div>
 
     <div class="field">
+      <label class="lbl" for="cLocation">Location</label>
+      <input type="text" id="cLocation" placeholder="e.g. Bangalore, Mumbai" />
+    </div>
+
+    <div class="field">
       <label class="lbl" for="cNote">Note for Client</label>
       <textarea id="cNote" rows="2" placeholder="Conveyance extra, advance, terms..."></textarea>
     </div>
 
-    <div class="s-section-head" style="margin-top:8px">Notes / Things to Consider</div>
-
-    <div id="notesList"></div>
-    <button class="add-note-btn" onclick="addNote()">+ Add Note</button>
-
-    <div class="s-section-head" style="margin-top:8px">Dates &amp; Events</div>
+    <div class="s-section-head" style="margin-top:6px">Dates &amp; Events</div>
     <div id="datesList"></div>
     <button class="add-date-btn" onclick="addDate()">+ Add Date</button>
 
     <button class="gen-btn" onclick="generate()">✦ Generate Quotation</button>
+
+    <!-- ═══════════════════════════════════
+         SAVED QUOTATIONS
+    ════════════════════════════════════ -->
+    <div class="s-section-head" style="margin-top:6px">Saved Quotations</div>
+
+    <button class="add-date-btn" onclick="promptSaveQuotation()">💾 Save Current Quotation</button>
+
+    <div class="saved-section">
+      <div class="saved-list" id="savedList"></div>
+    </div>
+
+    <div class="field" style="margin-top:4px">
+      <label class="lbl" for="importFile">Import Quotation File (.json)</label>
+      <input type="file" id="importFile" accept=".json,application/json" onchange="handleImportFile(this)" />
+    </div>
 
   </aside>
 
   <!-- ═══════════════════════════════════════
        PREVIEW – receipt output
   ════════════════════════════════════════ -->
-   
   <main class="preview" id="previewArea">
     <div class="empty-state" id="emptyState">
       <div class="empty-icon">💄</div>
@@ -70,7 +85,6 @@
 </div>
 
 <script src="data.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
