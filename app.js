@@ -974,7 +974,7 @@ function generate() {
         <div class="r-brand">
                   <img src="logo.png" alt="Monika Makeovers" class="r-logo" />
           <div class="r-brand-name">Monika Makeovers</div>
-          <div class="r-brand-sub">Makeup Artist</div>
+          <div class="r-brand-sub">Makeup Artist</div> 
         </div>
         <div class="r-header-right">
           <img src="logo.png" alt="Monika Makeovers" class="r-logo" />
@@ -1009,9 +1009,9 @@ function generate() {
 
       <div class="r-footer">
         <div class="r-footer-social">
-          <a href="${CONTACT.instagram}" target="_blank" class="social-link">📷 Instagram</a>
+          <a href="https://www.instagram.com/_monikamakeovers_?igsh=bm1hejJ2cmRkcGoy" target="_blank" class="social-link">📷 Instagram</a>
           <span class="footer-divider">|</span>
-          <a href="${CONTACT.wedme}" target="_blank" class="social-link">💍 WedMeGood</a>
+          <a href="https://www.wedmegood.com/profile/monika-makeovers--2249782" target="_blank" class="social-link">💍 WedMeGood</a>
         </div>
         <div class="r-footer-contact">
           ${CONTACT.phone1} &nbsp;|&nbsp; ${CONTACT.phone2}
