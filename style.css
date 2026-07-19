@@ -509,11 +509,11 @@ textarea { resize: vertical; }
      Add your own image file named "background.jpg" next to index.html
      — any image works, it'll be tinted and faded automatically. */
   background-color: #fff;
-  background-image: linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)), url('background.jpg');
+  background-image: linear-gradient(rgba(255, 255, 255, .30), rgba(255, 255, 255, .62)), url('background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
+}s
 
 /* Header */
 .r-header {
