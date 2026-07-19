@@ -403,17 +403,12 @@ preview.innerHTML = `
 </button>
 </div>
 <div id="receipt">
-<div class="r-header">
-<div class="r-brand">
-<div class="r-brand-name">Monika Makeovers</div>
-<div class="r-brand-sub">Makeup Artist</div>
-</div>
-<div class="r-header-right">
+<div class="r-header">   <div class="r-header-top">     <div class="r-brand">       <div class="r-brand-name">Monika Makeovers</div> 
+<div class="r-brand-sub">Makeup Artist</div>     </div>
+<div class="r-logo-container">    
 <img src="logo.png" alt="Monika Makeovers Logo" class="r-logo" />
-<div class="r-meta">
-<div class="r-qno">${qno}</div>
-<div class="r-date">Issued: ${today}</div>
-</div>
+</div>  
+</div>   <div class="r-issued-date">Issued: ${today}</div>  <!-- ONLY ISSUED DATE, NO QNO --> </div>
 </div>
 </div>
 <div class="r-client">
