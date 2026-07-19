@@ -98,6 +98,17 @@ html, body {
   font-weight: 500;
 }
 
+.required-mark {
+  color: #c0392b;
+  font-weight: 700;
+}
+
+/* Applied via JS when a mandatory field is left empty on Generate */
+.field-error {
+  border-color: #c0392b !important;
+  background: #fdeceb !important;
+}
+
 input[type="text"],
 input[type="date"],
 input[type="number"],
@@ -288,6 +299,32 @@ textarea { resize: vertical; }
   border-color: var(--teal);
 }
 
+/* ── Things to Consider (sidebar editor) ─────────────── */
+.consider-item {
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid #f0d0da;
+  border-radius: 5px;
+  padding: 7px 8px;
+  margin-bottom: 6px;
+}
+.consider-item-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.consider-item-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--teal-dark);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.consider-item textarea {
+  font-size: 11px;
+  padding: 5px 7px;
+}
+
 /* ── Add / generate buttons ──────────────────────────── */
 .add-btn, .add-date-btn {
   background: rgba(255, 255, 255, .6);
@@ -459,13 +496,23 @@ textarea { resize: vertical; }
 #receipt {
   width: 100%;
   max-width: 580px;
-  background: #fff;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--rose);
   font-family: 'Cormorant Garamond', serif;
   font-size: 15px;
   color: var(--text);
+
+  /* Background image at ~38% opacity: a white tint is blended over the
+     image (rather than using the `opacity` property) so the photo is
+     faded without fading the text/tables sitting on top of it.
+     Add your own image file named "background.jpg" next to index.html
+     — any image works, it'll be tinted and faded automatically. */
+  background-color: #fff;
+  background-image: linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)), url('background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Header */
@@ -670,6 +717,28 @@ textarea { resize: vertical; }
   padding: 10px 0;
   border-top: 1px solid #f0d0da;
 }
+
+/* "Things to Consider" — final page of the receipt */
+.r-considerations {
+  padding: 20px 28px 8px;
+  border-top: 1px dashed #f0d0da;
+  page-break-before: always; /* starts a fresh page when printed/saved as PDF */
+}
+.considerations-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--teal-dark);
+  text-align: center;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.considerations-list {
+  padding-left: 22px;
+  color: #444;
+  font-size: 14px;
+  line-height: 1.85;
+}
+.considerations-list li { margin-bottom: 7px; }
 
 /* Footer */
 .r-footer {
