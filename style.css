@@ -57,8 +57,8 @@ html, body {
   border-bottom: 1px solid var(--rose);
 }
 .s-logo {
-  width: 60px;
-  height: 65px;
+  width: 55px;
+  height: 55px;
   /*object-fit: cover;*/
   border: none;
   background: #f9edf3;
@@ -507,17 +507,19 @@ textarea { resize: vertical; }
      image (rather than using the `opacity` property) so the photo is
      faded without fading the text/tables sitting on top of it.
      Add your own image file named "background.jpg" next to index.html
-     — any image works, it'll be tinted and faded automatically. */
-  background-color: #fff;
-  background-image: linear-gradient(rgba(255, 255, 255, .10), rgba(255, 255, 255, .62)), url('background.jpg');
+     — any image works, it'll be tinted and faded automatically.
+     The image will show in both screen and PDF print. */
+  background-color: #f9eaf1;
+  background-image: linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)), url('background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}s
+  background-attachment: fixed;
+}
 
 /* Header */
 .r-header {
-  background: var(--rose-light);
+  background: #f9eaf1;
   padding: 20px 28px 16px;
   display: flex;
   justify-content: space-between;
@@ -827,6 +829,16 @@ textarea { resize: vertical; }
     box-shadow: none !important;
   }
 
+  /* Receipt background image visible in print/PDF */
+  #receipt {
+    background-color: #f9eaf1 !important;
+    background-image: linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)), url('background.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+  }
+
   /* Force background colours to print */
   * {
     -webkit-print-color-adjust: exact !important;
@@ -834,10 +846,10 @@ textarea { resize: vertical; }
     color: #1a1a1a !important;
   }
 
-  .r-header    { background: #f5dde3 !important; }
+  .r-header    { background: #f9eaf1 !important; }
   .r-client    { background: #e0f0f3 !important; }
-  .date-pill   { background: #f5dde3 !important; }
-  .r-grand     { background: #f5dde3 !important; }
+  .date-pill   { background: #f9eaf1 !important; }
+  .r-grand     { background: #f9eaf1 !important; }
   .r-footer    { background: #2b6070 !important; }
 
   .event-section {
