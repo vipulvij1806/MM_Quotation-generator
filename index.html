@@ -43,7 +43,12 @@
       <textarea id="cNote" rows="2" placeholder="Conveyance extra, advance, terms..."></textarea>
     </div>
 
-    <div class="s-section-head" style="margin-top:6px">Dates &amp; Events</div>
+    <div class="s-section-head" style="margin-top:8px">Notes / Things to Consider</div>
+
+    <div id="notesList"></div>
+    <button class="add-note-btn" onclick="addNote()">+ Add Note</button>
+
+    <div class="s-section-head" style="margin-top:8px">Dates &amp; Events</div>
     <div id="datesList"></div>
     <button class="add-date-btn" onclick="addDate()">+ Add Date</button>
 
@@ -64,6 +69,7 @@
 </div>
 
 <script src="data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
