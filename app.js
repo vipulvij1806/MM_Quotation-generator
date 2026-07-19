@@ -972,6 +972,7 @@ function generate() {
 
       <div class="r-header">
         <div class="r-brand">
+                  <img src="logo.png" alt="Monika Makeovers" class="r-logo" />
           <div class="r-brand-name">Monika Makeovers</div>
           <div class="r-brand-sub">Makeup Artist</div>
         </div>
