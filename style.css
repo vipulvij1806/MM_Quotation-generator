@@ -510,7 +510,7 @@ textarea { resize: vertical; }
      — any image works, it'll be tinted and faded automatically.
      The image will show in both screen and PDF print. */
   background-color: #f9eaf1;
-  background-image: linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)), url('background.jpg');
+  background-image: linear-gradient(rgba(255, 255, 255, .20), rgba(255, 255, 255, .20)), url('background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -832,7 +832,7 @@ textarea { resize: vertical; }
   /* Receipt background image visible in print/PDF */
   #receipt {
     background-color: #f9eaf1 !important;
-    background-image: linear-gradient(rgba(255, 255, 255, .30), rgba(255, 255, 255, .30)), url('background.jpg') !important;
+    background-image: linear-gradient(rgba(255, 255, 255, .20), rgba(255, 255, 255, .20)), url('background.jpg') !important;
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
