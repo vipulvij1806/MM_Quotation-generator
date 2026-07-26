@@ -773,18 +773,16 @@ textarea { resize: vertical; }
       url('logo.png'),
       url('logo.png'),
       url('logo.png'),
-      url('logo.png'),
       url('logo.png') !important;
     background-size: 150px 150px !important;
     background-position: 
-      0% 0%,
       33% 33%,
       66% 66%,
       0% 66%,
       33% 0%,
       66% 33% !important;
     background-repeat: no-repeat !important;
-    opacity: 0.25 !important;
+    opacity: 0.40 !important;
     filter: blur(6px) !important;
     -webkit-filter: blur(6px) !important;
     pointer-events: none !important;
