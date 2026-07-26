@@ -1,6 +1,6 @@
 /**
  * data.js — Monika Makeovers
- * All package definitions and pricing defaults.
+ * All package definitions, pricing defaults, and configuration.
  * Edit this file to update services or default rates.
  */
 
@@ -92,6 +92,88 @@ const PKGS = {
   },
 };
 
+/* ─── Bridal Event Types ─────────────────────────────────── */
+const BRIDAL_EVENTS = {
+  roka: { label: "Roka Ceremony / Day Function Makeup", price: 15000 },
+  haldi: { label: "Haldi / Mehendi / Carnival / Mayra", price: 15000 },
+  sangeet: { label: "Sangeet / Sagai / Ring Ceremony / Cocktail", price: 20000 },
+  wedding: { label: "Wedding / Reception / Pheras", price: 31000 },
+};
+
+/* ─── Bridal Package Details ────────────────────────────── */
+const BRIDAL_DETAILS = {
+  products: [
+    "NARS",
+    "HUDA Beauty",
+    "Estee Lauder",
+    "Too Faced",
+    "Charlotte Tilbury",
+    "Giorgio Armani",
+  ],
+  inclusions: [
+    { name: "Makeup", checked: true },
+    { name: "Hairstyle", checked: true },
+    { name: "Draping", checked: true },
+    { name: "Lenses", checked: true },
+    { name: "Lashes", checked: true },
+    { name: "One Reusable Hair Extension", checked: true },
+  ],
+  exclusions: [
+    { name: "Conveyance", checked: true },
+    { name: "Fresh Flowers (On prior request)", checked: true },
+    { name: "Hair Accessories (Printed Price)", checked: true },
+  ],
+};
+
+/* ─── HD Makeup Package Details ─────────────────────────── */
+const HD_DETAILS = {
+  products: [
+    "MAC",
+    "NARS",
+    "Bobbi Brown",
+    "Kay Beauty",
+    "PAC HD",
+    "Too Faced",
+  ],
+  inclusions: [
+    { name: "Makeup", checked: true },
+    { name: "Hairstyle", checked: true },
+    { name: "Draping", checked: true },
+    { name: "Lenses", checked: true },
+    { name: "False Lashes", checked: true },
+  ],
+  exclusions: [
+    { name: "Conveyance Extra", checked: true },
+    { name: "Hair Extension (₹1,000 / ₹1,500)", checked: true },
+    { name: "Fresh Flowers (On prior request)", checked: true },
+    { name: "Hair Accessories (Printed Price)", checked: true },
+  ],
+};
+
+/* ─── Basic Makeup Package Details ──────────────────────── */
+const BASIC_DETAILS = {
+  products: [
+    "Maybelline",
+    "Forever 52",
+    "Loreal Paris",
+    "LA Girl",
+    "Milani",
+    "PAC",
+    "Kay Beauty",
+  ],
+  inclusions: [
+    { name: "Makeup", checked: true },
+    { name: "Hairstyle", checked: true },
+    { name: "Draping", checked: true },
+  ],
+  exclusions: [
+    { name: "Hair Extension (₹1,000)", checked: true },
+    { name: "Hair Accessories (Printed Price)", checked: true },
+    { name: "Lenses (₹500)", checked: true },
+    { name: "False Lashes (₹500)", checked: true },
+  ],
+};
+
 /* Default "Things to Consider" sections — shown as a final page on the
    receipt. Each client starts with these 5; edit, remove, or add more
    from the sidebar. Change the defaults here if you want new quotations
@@ -109,6 +191,6 @@ const CONTACT = {
   phone1: "+91-8107654303",
   phone2: "+91-9886008604",
   tagline: "Thank you for choosing us ✦",
-  instagram: "https://instagram.com/monika_makeovers", // Update with actual link
-  wedme: "https://wedme.in/monika-makeovers", // Update with actual link
+  instagram: "https://instagram.com/monika_makeovers",
+  wedme: "https://wedme.in/monika-makeovers",
 };
