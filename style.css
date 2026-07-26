@@ -455,11 +455,43 @@ textarea { resize: vertical; }
   font-size: 15px;
   color: var(--text);
   background-color: #f9eaf1;
-  /* background-image: linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)), url('background.jpg'); */
-  /* background-size: cover; */
-  /* background-position: center; */
-  /* background-repeat: no-repeat; */
-  /* background-attachment: fixed; */
+  position: relative;
+}
+
+/* Blurred logo watermark layer */
+#receipt::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png');
+  background-size: 150px 150px;
+  background-position: 
+    0% 0%,
+    33% 33%,
+    66% 66%,
+    0% 66%,
+    33% 0%,
+    66% 33%;
+  background-repeat: no-repeat;
+  opacity: 0.25;
+  filter: blur(6px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure all content sits above watermark */
+#receipt > * {
+  position: relative;
+  z-index: 1;
 }
 
 .r-header {
@@ -474,7 +506,7 @@ textarea { resize: vertical; }
 .r-brand-name { font-family: 'Playfair Display', serif; font-size: 26px; font-style: italic; color: #1a1a1a; letter-spacing: -.01em; }
 .r-brand-sub { font-size: 11px; letter-spacing: .2em; color: var(--teal); text-transform: uppercase; margin-top: 3px; }
 .r-header-right { display: flex; align-items: center; gap: 14px; }
-.r-logo { width: 80px; height: 80px; border-radius: 0; object-fit: contain; border: none; background: transparent; flex-shrink: 0; }
+.r-logo { width: 64px; height: 64px; border-radius: 0; object-fit: contain; border: none; background: transparent; flex-shrink: 0; }
 .r-meta { text-align: right; }
 .r-date { font-size: 12px; color: var(--teal); margin-top: 2px; }
 
@@ -733,6 +765,30 @@ textarea { resize: vertical; }
     /* background-position: center !important; */
     /* background-repeat: no-repeat !important; */
     /* background-attachment: fixed !important; */
+  }
+
+  #receipt::before {
+    background-image: 
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png') !important;
+    background-size: 150px 150px !important;
+    background-position: 
+      0% 0%,
+      33% 33%,
+      66% 66%,
+      0% 66%,
+      33% 0%,
+      66% 33% !important;
+    background-repeat: no-repeat !important;
+    opacity: 0.25 !important;
+    filter: blur(6px) !important;
+    -webkit-filter: blur(6px) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
   }
 
   .r-header { background: #f9eaf1 !important; }
