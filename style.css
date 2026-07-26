@@ -4,14 +4,14 @@
 
 :root {
   --rose:        #e8a0b0;
-  --rose-light:  #f5dde3;
-  --rose-pale:   #fdf0f3;
-  --teal:        #3a7d8c;
-  --teal-dark:   #2b6070;
-  --teal-bg:     #e0f0f3;
+  --rose-light:  #ffd9e1;
+  --rose-pale:   #ffd9e1;
+  --teal:        #607d8b;
+  --teal-dark:   #455a64;
+  --teal-bg:     #cfd8dc;
   --gold:        #c9a96e;
-  --text:        #2c2c2c;
-  --text-muted:  #888888;
+  --text:        #607d8b;
+  --text-muted:  #90a4ae;
   --sidebar-w:   300px;
 }
 
@@ -447,18 +447,51 @@ textarea { resize: vertical; }
 #receipt {
   width: 100%;
   max-width: 580px;
-  background: #fff;
+  background: #ffd9e1;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--rose);
   font-family: 'Cormorant Garamond', serif;
   font-size: 15px;
   color: var(--text);
-  background-color: #f9eaf1;
   position: relative;
+  
+  /* Small repeating background image pattern */
+  background-image: 
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png'),
+    url('logo.png');
+  background-size: 
+    80px 80px,
+    80px 80px,
+    80px 80px,
+    80px 80px,
+    80px 80px,
+    80px 80px,
+    80px 80px,
+    80px 80px,
+    80px 80px;
+  background-position: 
+    0% 0%,
+    25% 25%,
+    50% 50%,
+    75% 75%,
+    12% 12%,
+    37% 37%,
+    62% 62%,
+    87% 87%,
+    25% 75%;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
 }
 
-/* Blurred logo watermark layer */
+/* Logo watermark layer - visible but faded */
 #receipt::before {
   content: '';
   position: absolute;
@@ -473,17 +506,23 @@ textarea { resize: vertical; }
     url('logo.png'),
     url('logo.png'),
     url('logo.png');
-  background-size: 150px 150px;
+  background-size: 
+    120px 120px,
+    120px 120px,
+    120px 120px,
+    120px 120px,
+    120px 120px,
+    120px 120px;
   background-position: 
-    0% 0%,
-    33% 33%,
-    66% 66%,
-    0% 66%,
-    33% 0%,
-    66% 33%;
+    10% 15%,
+    35% 40%,
+    60% 65%,
+    15% 60%,
+    40% 10%,
+    70% 35%;
   background-repeat: no-repeat;
-  opacity: 0.25;
-  filter: blur(6px);
+  opacity: 0.35;
+  filter: blur(3px);
   pointer-events: none;
   z-index: 0;
 }
@@ -495,7 +534,7 @@ textarea { resize: vertical; }
 }
 
 .r-header {
-  background: #f9eaf1;
+  background: #ffd9e1;
   padding: 20px 28px 16px;
   display: flex;
   justify-content: space-between;
@@ -511,7 +550,7 @@ textarea { resize: vertical; }
 .r-date { font-size: 12px; color: var(--teal); margin-top: 2px; }
 
 .r-client {
-  background: #f9eaf1;
+  background: #ffd9e1;
   padding: 16px 28px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -554,7 +593,7 @@ textarea { resize: vertical; }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: #f9eaf1;
+  background: #ffd9e1;
   padding: 5px 14px;
   border-radius: 20px;
   font-size: 14px;
@@ -648,7 +687,7 @@ textarea { resize: vertical; }
 }
 
 .r-grand {
-  background: #f9eaf1;
+  background: #ffd9e1;
   padding: 16px 28px;
   display: flex;
   justify-content: space-between;
@@ -759,12 +798,38 @@ textarea { resize: vertical; }
   }
 
   #receipt {
-    background-color: #f9eaf1 !important;
-    /* background-image: linear-gradient(rgba(255, 255, 255, .62), rgba(255, 255, 255, .62)), url('background.jpg') !important; */
-    /* background-size: cover !important; */
-    /* background-position: center !important; */
-    /* background-repeat: no-repeat !important; */
-    /* background-attachment: fixed !important; */
+    background-color: #ffd9e1 !important;
+    background-image: 
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png'),
+      url('logo.png') !important;
+    background-size: 
+      80px 80px,
+      80px 80px,
+      80px 80px,
+      80px 80px,
+      80px 80px,
+      80px 80px,
+      80px 80px,
+      80px 80px,
+      80px 80px !important;
+    background-position: 
+      0% 0%,
+      25% 25%,
+      50% 50%,
+      75% 75%,
+      12% 12%,
+      37% 37%,
+      62% 62%,
+      87% 87%,
+      25% 75% !important;
+    background-repeat: no-repeat !important;
   }
 
   #receipt::before {
@@ -773,28 +838,36 @@ textarea { resize: vertical; }
       url('logo.png'),
       url('logo.png'),
       url('logo.png'),
+      url('logo.png'),
       url('logo.png') !important;
-    background-size: 150px 150px !important;
+    background-size: 
+      120px 120px,
+      120px 120px,
+      120px 120px,
+      120px 120px,
+      120px 120px,
+      120px 120px !important;
     background-position: 
-      33% 33%,
-      66% 66%,
-      0% 66%,
-      33% 0%,
-      66% 33% !important;
+      10% 15%,
+      35% 40%,
+      60% 65%,
+      15% 60%,
+      40% 10%,
+      70% 35% !important;
     background-repeat: no-repeat !important;
-    opacity: 0.40 !important;
-    filter: blur(6px) !important;
-    -webkit-filter: blur(6px) !important;
+    opacity: 0.35 !important;
+    filter: blur(3px) !important;
+    -webkit-filter: blur(3px) !important;
     pointer-events: none !important;
     z-index: 0 !important;
   }
 
-  .r-header { background: #f9eaf1 !important; }
-  .r-client { background: #f9eaf1 !important; }
+  .r-header { background: #ffd9e1 !important; }
+  .r-client { background: #ffd9e1 !important; }
   .r-status { background: rgba(232, 160, 176, 0.08) !important; }
-  .date-pill { background: #f9eaf1 !important; }
-  .r-grand { background: #f9eaf1 !important; }
-  .r-footer { background: #2b6070 !important; }
+  .date-pill { background: #ffd9e1 !important; }
+  .r-grand { background: #ffd9e1 !important; }
+  .r-footer { background: #455a64 !important; }
 
   .event-section { border-left: 2.5px solid #e8a0b0 !important; }
   .pkg-notes { background: rgba(232, 160, 176, 0.08) !important; border-left: 2px solid #e8a0b0 !important; }
