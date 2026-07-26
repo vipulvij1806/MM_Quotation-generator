@@ -1,4 +1,3 @@
-
 /**
  * app.js — Monika Makeovers Quotation Builder (Enhanced)
  * Major features: Event replication, Additional charges, Event requirements, Quotation status
