@@ -29,32 +29,57 @@
     <div class="s-section-head">Client Details</div>
 
     <div class="field">
-      <label class="lbl" for="cName">Client Name <span class="required-mark">*</span></label>
+      <label class="lbl" for="cName">Client Name <span class="req">*</span></label>
       <input type="text" id="cName" placeholder="e.g. Priya Sharma" required />
     </div>
 
     <div class="field">
-      <label class="lbl" for="cPhone">Phone / WhatsApp <span class="required-mark">*</span></label>
+      <label class="lbl" for="cPhone">Phone / WhatsApp <span class="req">*</span></label>
       <input type="text" id="cPhone" placeholder="+91 98765 43210" required />
     </div>
 
     <div class="field">
-      <label class="lbl" for="cLocation">Location <span class="required-mark">*</span></label>
+      <label class="lbl" for="cEmail">Email (Optional)</label>
+      <input type="email" id="cEmail" placeholder="e.g. priya@email.com" />
+    </div>
+
+    <div class="field">
+      <label class="lbl" for="cLocation">Location <span class="req">*</span></label>
       <input type="text" id="cLocation" placeholder="e.g. Bangalore, Mumbai" required />
     </div>
 
     <div class="field">
       <label class="lbl" for="cNote">Note for Client</label>
-      <textarea id="cNote" rows="2" placeholder="Conveyance extra, advance, terms..."></textarea>
+      <textarea id="cNote" rows="2" placeholder="Any specific note for this client (optional)..."></textarea>
     </div>
+
+    <div class="s-section-head" style="margin-top:6px">Quotation Status</div>
+    <div class="status-radios">
+      <label class="radio-label">
+        <input type="radio" name="quotationStatus" value="quotation_shared" />
+        Quotation Shared
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="quotationStatus" value="revised_quotation" />
+        Revised Quotation
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="quotationStatus" value="advance_received" />
+        Advance Received
+      </label>
+    </div>
+
+    <div class="s-section-head" style="margin-top:6px">Things to Consider <span class="s-section-sub">(final page)</span></div>
+    <div id="considerList"></div>
+    <button class="add-item-btn" onclick="addConsideration()">+ Add Section</button>
 
     <div class="s-section-head" style="margin-top:6px">Dates &amp; Events</div>
     <div id="datesList"></div>
     <button class="add-date-btn" onclick="addDate()">+ Add Date</button>
 
-    <div class="s-section-head" style="margin-top:6px">Things to Consider <span style="text-transform:none;font-weight:400">(final page)</span></div>
-    <div id="considerationsList"></div>
-    <button class="add-date-btn" onclick="addConsiderationSection()">+ Add Section</button>
+    <div class="s-section-head" style="margin-top:6px">Additional Charges</div>
+    <div id="additionalList"></div>
+    <button class="add-item-btn" onclick="addAdditionalCharge()">+ Add Charge</button>
 
     <button class="gen-btn" onclick="generate()">✦ Generate Quotation</button>
 
