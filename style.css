@@ -544,7 +544,7 @@ textarea { resize: vertical; }
   font-family: 'Cormorant Garamond', serif;
   color: var(--text);
   position: relative;
-  background-image: 
+/*  background-image: 
     url('logo.png'),
     url('logo.png'),
     url('logo.png'),
@@ -576,7 +576,7 @@ textarea { resize: vertical; }
     25% 75%;
   background-repeat: no-repeat;
   background-attachment: scroll;
-}
+} */
 
 #receipt::before {
   content: '';
