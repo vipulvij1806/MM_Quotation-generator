@@ -86,7 +86,7 @@ const PKGS = {
   },
 };
 
-/* Bridal Event Types */
+/* Bridal Event Types with PAX-based pricing */
 const BRIDAL_EVENTS = {
   roka: { label: "Roka Ceremony / Day Function Makeup", price: 15000 },
   haldi: { label: "Haldi / Mehendi / Carnival / Mayra", price: 15000 },
@@ -94,7 +94,7 @@ const BRIDAL_EVENTS = {
   wedding: { label: "Wedding / Reception / Pheras", price: 31000 },
 };
 
-/* Bridal Package Details */
+/* Bridal Package Details - PRODUCTS */
 const BRIDAL_DETAILS = {
   products: ["NARS", "HUDA Beauty", "Estee Lauder", "Too Faced", "Charlotte Tilbury", "Giorgio Armani"],
   inclusions: [
