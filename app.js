@@ -1,5 +1,9 @@
 /**
- * app.js — Monika Makeovers Quotation Builder (Complete & Working)
+ * app.js — Monika Makeovers Quotation Builder (Updated)
+ * - Bridal Details (Products, Inclusions, Exclusions) now visible in builder
+ * - Only Bridal Event Types selectable (no individual look prices)
+ * - PAX (number of looks) per event with auto-calculation
+ * - Print view hides left sidebar
  */
 
 let dateCounter = 0;
@@ -11,7 +15,11 @@ const STATE = {
   advanceAmount: 0,
   conveyanceAmount: 0,
   quotationStatus: "",
-  showPackageDetails: false
+  bridalDetails: JSON.parse(JSON.stringify({ 
+    products: BRIDAL_DETAILS.products,
+    inclusions: JSON.parse(JSON.stringify(BRIDAL_DETAILS.inclusions)),
+    exclusions: JSON.parse(JSON.stringify(BRIDAL_DETAILS.exclusions))
+  }))
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -55,6 +63,132 @@ function updateState() {
   
   const conveyanceInput = document.getElementById("conveyanceAmount");
   STATE.conveyanceAmount = parseFloat(conveyanceInput.value) || 0;
+}
+
+/* ─── Bridal Details Management ─────────────────────── */
+function toggleBridalInclusion(index) {
+  STATE.bridalDetails.inclusions[index].checked = !STATE.bridalDetails.inclusions[index].checked;
+  renderBridalDetailsModal();
+}
+
+function toggleBridalExclusion(index) {
+  STATE.bridalDetails.exclusions[index].checked = !STATE.bridalDetails.exclusions[index].checked;
+  renderBridalDetailsModal();
+}
+
+function addBridalProduct() {
+  const name = prompt("Enter product name:");
+  if (name && name.trim()) {
+    STATE.bridalDetails.products.push(name.trim());
+    renderBridalDetailsModal();
+  }
+}
+
+function removeBridalProduct(index) {
+  STATE.bridalDetails.products.splice(index, 1);
+  renderBridalDetailsModal();
+}
+
+function addBridalInclusion() {
+  const name = prompt("Enter inclusion name:");
+  if (name && name.trim()) {
+    STATE.bridalDetails.inclusions.push({ name: name.trim(), checked: true });
+    renderBridalDetailsModal();
+  }
+}
+
+function removeBridalInclusion(index) {
+  STATE.bridalDetails.inclusions.splice(index, 1);
+  renderBridalDetailsModal();
+}
+
+function addBridalExclusion() {
+  const name = prompt("Enter exclusion name:");
+  if (name && name.trim()) {
+    STATE.bridalDetails.exclusions.push({ name: name.trim(), checked: true });
+    renderBridalDetailsModal();
+  }
+}
+
+function removeBridalExclusion(index) {
+  STATE.bridalDetails.exclusions.splice(index, 1);
+  renderBridalDetailsModal();
+}
+
+function renderBridalDetailsModal() {
+  const modal = document.getElementById("bridalDetailsModal");
+  if (!modal) return;
+
+  let html = `<div class="modal-content">
+    <div class="modal-header">
+      <h3>Bridal Package Details</h3>
+      <button class="modal-close" onclick="closeBridalDetailsModal()">×</button>
+    </div>
+
+    <div class="modal-body">
+      <div class="details-section">
+        <h4>Products Used</h4>
+        <div class="products-list">`;
+  
+  STATE.bridalDetails.products.forEach((p, i) => {
+    html += `<div class="product-item">
+      <span>${p}</span>
+      <button class="item-rm-btn" onclick="removeBridalProduct(${i})">×</button>
+    </div>`;
+  });
+
+  html += `</div>
+        <button class="add-item-btn" onclick="addBridalProduct()">+ Add Product</button>
+      </div>
+
+      <div class="details-section">
+        <h4>Inclusions</h4>`;
+
+  STATE.bridalDetails.inclusions.forEach((inc, i) => {
+    html += `<label class="detail-checkbox">
+      <input type="checkbox" ${inc.checked ? "checked" : ""} onchange="toggleBridalInclusion(${i})" />
+      <span>${inc.name}</span>
+      <button class="item-rm-btn" onclick="removeBridalInclusion(${i})">×</button>
+    </label>`;
+  });
+
+  html += `<button class="add-item-btn" onclick="addBridalInclusion()">+ Add Inclusion</button>
+      </div>
+
+      <div class="details-section">
+        <h4>Exclusions</h4>`;
+
+  STATE.bridalDetails.exclusions.forEach((exc, i) => {
+    html += `<label class="detail-checkbox">
+      <input type="checkbox" ${exc.checked ? "checked" : ""} onchange="toggleBridalExclusion(${i})" />
+      <span>${exc.name}</span>
+      <button class="item-rm-btn" onclick="removeBridalExclusion(${i})">×</button>
+    </label>`;
+  });
+
+  html += `<button class="add-item-btn" onclick="addBridalExclusion()">+ Add Exclusion</button>
+      </div>
+    </div>
+  </div>`;
+
+  modal.innerHTML = html;
+  modal.style.display = "block";
+}
+
+function openBridalDetailsModal() {
+  renderBridalDetailsModal();
+}
+
+function closeBridalDetailsModal() {
+  const modal = document.getElementById("bridalDetailsModal");
+  if (modal) modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+  const modal = document.getElementById("bridalDetailsModal");
+  if (event.target === modal) {
+    modal.style.display = "none";
+  }
 }
 
 /* ─── Considerations ────────────────────────────────── */
@@ -229,13 +363,16 @@ function togglePkg(dateId, eventId, pk) {
     delete ev.pkgs[pk];
   } else {
     ev.pkgs[pk] = {};
-    PKGS[pk].fields.forEach((f) => {
-      ev.pkgs[pk][f.k] = f.d;
-    });
-    ev.pkgs[pk]["disc"] = 0;
-    ev.pkgs[pk]["pkgNote"] = "";
     if (pk === "bridal") {
       ev.pkgs[pk]["bridalEvents"] = {};
+      ev.pkgs[pk]["discount"] = 0;
+      ev.pkgs[pk]["pkgNote"] = "";
+    } else {
+      PKGS[pk].fields.forEach((f) => {
+        ev.pkgs[pk][f.k] = f.d;
+      });
+      ev.pkgs[pk]["disc"] = 0;
+      ev.pkgs[pk]["pkgNote"] = "";
     }
   }
   renderSidebar();
@@ -248,14 +385,19 @@ function setField(dateId, eventId, pk, fieldKey, value) {
   }
 }
 
-function setBridalEvent(dateId, eventId, eventType, checked) {
+function setBridalEvent(dateId, eventId, eventType, pax) {
   const ev = getEvent(dateId, eventId);
   if (ev && ev.pkgs["bridal"]) {
     if (!ev.pkgs["bridal"]["bridalEvents"]) {
       ev.pkgs["bridal"]["bridalEvents"] = {};
     }
-    if (checked) {
-      ev.pkgs["bridal"]["bridalEvents"][eventType] = BRIDAL_EVENTS[eventType].price;
+    const paxCount = parseInt(pax) || 1;
+    if (paxCount > 0) {
+      ev.pkgs["bridal"]["bridalEvents"][eventType] = {
+        price: BRIDAL_EVENTS[eventType].price,
+        pax: paxCount,
+        total: BRIDAL_EVENTS[eventType].price * paxCount
+      };
     } else {
       delete ev.pkgs["bridal"]["bridalEvents"][eventType];
     }
@@ -315,37 +457,51 @@ function buildEventBlock(dateId, ev, index) {
   let opts = '<div class="pkg-opts">';
   Object.entries(ev.pkgs).forEach(([k, pdata]) => {
     const p = PKGS[k];
-    opts += `<div class="opt-box"><div class="opt-head" style="color:${p.color}">${p.label}</div>`;
+    opts += `<div class="opt-box"><div class="opt-head" style="color:${p.color}">${p.label}`;
+    
+    if (k === "bridal") {
+      opts += ` <button class="details-link" onclick="openBridalDetailsModal()">📋 Details</button>`;
+    }
+    
+    opts += `</div>`;
 
     if (k === "bridal") {
       opts += `<div class="bridal-events-section"><div class="bridal-label">Select Bridal Events:</div>`;
       Object.entries(BRIDAL_EVENTS).forEach(([etype, edata]) => {
-        const isSelected = pdata.bridalEvents && pdata.bridalEvents[etype];
+        const eventData = pdata.bridalEvents && pdata.bridalEvents[etype];
+        const paxCount = eventData ? eventData.pax : 1;
         opts += `
-          <label class="bridal-event-check">
-            <input type="checkbox" ${isSelected ? "checked" : ""} onchange="setBridalEvent('${dateId}','${ev.id}','${etype}', this.checked)" />
-            <span class="bridal-label-text">${edata.label}</span>
-            <span class="bridal-price">₹${edata.price.toLocaleString()}</span>
-          </label>
+          <div class="bridal-event-row">
+            <label class="bridal-event-check">
+              <input type="checkbox" ${eventData ? "checked" : ""} onchange="setBridalEvent('${dateId}','${ev.id}','${etype}', ${eventData ? paxCount : 1})" />
+              <span class="bridal-label-text">${edata.label}</span>
+              <span class="bridal-price">₹${edata.price.toLocaleString()}</span>
+            </label>
+            ${eventData ? `<div class="pax-control">
+              <label>Looks (Pax):</label>
+              <input type="number" min="1" value="${paxCount}" onchange="setBridalEvent('${dateId}','${ev.id}','${etype}', this.value)" class="pax-input" />
+              <span class="pax-total">= ₹${eventData.total.toLocaleString()}</span>
+            </div>` : ""}
+          </div>
         `;
       });
       opts += `</div>`;
+    } else {
+      p.fields.forEach((f) => {
+        const val = pdata[f.k] !== undefined ? pdata[f.k] : f.d;
+        opts += `<div class="price-row">
+          <span class="price-lbl">${f.l}</span>
+          <input type="number" class="pi" value="${val}" min="0"
+            onchange="setField('${dateId}','${ev.id}','${k}','${f.k}',this.value)" />
+        </div>`;
+      });
     }
-
-    p.fields.forEach((f) => {
-      const val = pdata[f.k] !== undefined ? pdata[f.k] : f.d;
-      opts += `<div class="price-row">
-        <span class="price-lbl">${f.l}</span>
-        <input type="number" class="pi" value="${val}" min="0"
-          onchange="setField('${dateId}','${ev.id}','${k}','${f.k}',this.value)" />
-      </div>`;
-    });
 
     const disc = pdata["disc"] || 0;
     opts += `<div class="price-row">
       <span class="price-lbl discount-lbl">Discount (₹)</span>
       <input type="number" class="pi discount-input" value="${disc}" min="0"
-        onchange="setField('${dateId}','${ev.id}','${k}','disc',this.value)" />
+        onchange="setField('${dateId}','${ev.id}','${k}','${k === "bridal" ? "discount" : "disc"}',this.value)" />
     </div>`;
 
     const pkgNote = pdata["pkgNote"] || "";
@@ -384,13 +540,9 @@ function calcPkgTotal(pk, pd) {
   let total = 0;
   
   if (pk === "bridal") {
-    PKGS[pk].fields.forEach((f) => {
-      const v = parseFloat(pd[f.k]) || 0;
-      total += v;
-    });
     if (pd.bridalEvents) {
-      Object.values(pd.bridalEvents).forEach((price) => {
-        total += price;
+      Object.values(pd.bridalEvents).forEach((eventData) => {
+        total += eventData.total || 0;
       });
     }
   } else {
@@ -399,7 +551,8 @@ function calcPkgTotal(pk, pd) {
     });
   }
 
-  return Math.max(0, total - (parseFloat(pd["disc"]) || 0));
+  const discount = pk === "bridal" ? (parseFloat(pd["discount"]) || 0) : (parseFloat(pd["disc"]) || 0);
+  return Math.max(0, total - discount);
 }
 
 /* ─── Date Formatter ────────────────────────────────── */
@@ -474,15 +627,14 @@ function buildReceiptHTML() {
         let rows = "";
         
         if (k === "bridal") {
-          PKGS[k].fields.forEach((f) => {
-            const v = parseFloat(pd[f.k]) || 0;
-            if (v > 0) {
-              rows += `<tr><td>${f.l}</td><td class="td-right">₹${v.toLocaleString()}</td></tr>`;
-            }
-          });
           if (pd.bridalEvents) {
-            Object.entries(pd.bridalEvents).forEach(([etype, price]) => {
-              rows += `<tr><td>${BRIDAL_EVENTS[etype].label}</td><td class="td-right">₹${price.toLocaleString()}</td></tr>`;
+            Object.entries(pd.bridalEvents).forEach(([etype, eventData]) => {
+              rows += `<tr>
+                <td>${BRIDAL_EVENTS[etype].label}</td>
+                <td class="td-center">${eventData.pax}</td>
+                <td class="td-right">₹${BRIDAL_EVENTS[etype].price.toLocaleString()}</td>
+                <td class="td-right">₹${eventData.total.toLocaleString()}</td>
+              </tr>`;
             });
           }
         } else {
@@ -494,7 +646,7 @@ function buildReceiptHTML() {
           });
         }
 
-        const disc = parseFloat(pd["disc"]) || 0;
+        const disc = k === "bridal" ? (parseFloat(pd["discount"]) || 0) : (parseFloat(pd["disc"]) || 0);
         if (disc) {
           rows += `<tr><td class="td-discount">Discount</td><td class="td-right td-discount">−₹${disc.toLocaleString()}</td></tr>`;
         }
