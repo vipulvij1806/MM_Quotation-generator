@@ -544,7 +544,7 @@ textarea { resize: vertical; }
   font-family: 'Cormorant Garamond', serif;
   color: var(--text);
   position: relative;
-/*  background-image: 
+  background-image: 
     url('logo.png'),
     url('logo.png'),
     url('logo.png'),
@@ -576,7 +576,7 @@ textarea { resize: vertical; }
     25% 75%;
   background-repeat: no-repeat;
   background-attachment: scroll;
-} */
+}
 
 #receipt::before {
   content: '';
@@ -904,4 +904,222 @@ textarea { resize: vertical; }
   .preview { padding: 16px 10px; }
   .button-group { flex-direction: column; }
   .r-client { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* ─── Modal Styling ────────────────────────────────── */
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #ffd9e1;
+  padding: 24px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--rose);
+  padding-bottom: 10px;
+}
+
+.modal-header h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  color: var(--teal-dark);
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #c99;
+  transition: color .15s;
+}
+
+.modal-close:hover {
+  color: #a55;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.details-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.details-section h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--teal-dark);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.product-item span:first-child {
+  flex: 1;
+  color: var(--text);
+}
+
+.detail-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  border-radius: 3px;
+  transition: background .15s;
+}
+
+.detail-checkbox:hover {
+  background: rgba(232, 160, 176, 0.15);
+}
+
+.detail-checkbox input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+  accent-color: var(--teal);
+}
+
+.detail-checkbox span {
+  flex: 1;
+  color: var(--text);
+}
+
+.details-link {
+  background: none;
+  border: 1px solid var(--teal);
+  color: var(--teal);
+  padding: 3px 8px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  margin-left: 8px;
+  transition: all .15s;
+}
+
+.details-link:hover {
+  background: var(--teal);
+  color: #fff;
+}
+
+/* ─── Bridal Events Updates ────────────────────────── */
+.bridal-event-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(232, 160, 176, 0.08);
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+
+.pax-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  padding-left: 24px;
+}
+
+.pax-control label {
+  font-weight: 600;
+  color: var(--teal);
+  min-width: 60px;
+}
+
+.pax-input {
+  width: 60px !important;
+  padding: 4px 6px !important;
+  text-align: center;
+}
+
+.pax-total {
+  font-weight: 600;
+  color: var(--teal-dark);
+  margin-left: 8px;
+}
+
+/* ─── Print Fixes ──────────────────────────────────── */
+.no-print {
+  display: block !important;
+}
+
+@media print {
+  .no-print,
+  .sidebar,
+  .button-group,
+  .empty-state,
+  .modal {
+    display: none !important;
+  }
+
+  html, body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .app {
+    display: block !important;
+    flex-direction: column !important;
+  }
+
+  .preview {
+    width: 100% !important;
+    padding: 0 !important;
+    background: white !important;
+    display: block !important;
+  }
+
+  #receipt {
+    width: 100% !important;
+    max-width: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
 }
