@@ -544,7 +544,7 @@ textarea { resize: vertical; }
   font-family: 'Cormorant Garamond', serif;
   color: var(--text);
   position: relative;
-  background-image: 
+ /* background-image: 
     url('logo.png'),
     url('logo.png'),
     url('logo.png'),
@@ -574,7 +574,7 @@ textarea { resize: vertical; }
     62% 62%,
     87% 87%,
     25% 75%;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   background-attachment: scroll;
 }
 
