@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Monika Makeovers – Quotation Builder</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="s-brand">
+      <img src="logo.png" alt="Monika Makeovers" class="s-logo" onerror="this.style.display='none'" />
+      <div>
+        <div class="s-brand-name">Monika Makeovers</div>
+        <div class="s-brand-sub">Quotation Builder</div>
+      </div>
+    </div>
+
+    <div class="s-section-head">Client Details</div>
+
+    <div class="field">
+      <label class="lbl">Client Name <span class="req">*</span></label>
+      <input type="text" id="cName" placeholder="e.g. Priya Sharma" required />
+    </div>
+
+    <div class="field">
+      <label class="lbl">Phone / WhatsApp <span class="req">*</span></label>
+      <input type="text" id="cPhone" placeholder="+91 98765 43210" required />
+    </div>
+
+    <div class="field">
+      <label class="lbl">Email (Optional)</label>
+      <input type="email" id="cEmail" placeholder="e.g. priya@email.com" />
+    </div>
+
+    <div class="field">
+      <label class="lbl">Location <span class="req">*</span></label>
+      <input type="text" id="cLocation" placeholder="e.g. Bangalore" required />
+    </div>
+
+    <div class="s-section-head" style="margin-top:10px">Quotation Status</div>
+    
+    <div class="status-radios">
+      <label class="radio-label">
+        <input type="radio" name="quotationStatus" value="quotation_shared" onchange="onStatusChange()" />
+        Quotation Shared
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="quotationStatus" value="revised_quotation" onchange="onStatusChange()" />
+        Revised Quotation
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="quotationStatus" value="advance_received" onchange="onStatusChange()" />
+        Advance Received
+      </label>
+    </div>
+
+    <div id="advanceSection" class="field" style="display:none; margin-top:10px;">
+      <label class="lbl">Advance Amount Paid (₹)</label>
+      <input type="number" id="advanceAmount" placeholder="₹0" min="0" value="0" onchange="updateState()" />
+    </div>
+
+    <div class="s-section-head" style="margin-top:10px">Conveyance & Additional Charges</div>
+    <div class="field">
+      <label class="lbl">Conveyance (₹)</label>
+      <input type="number" id="conveyanceAmount" placeholder="₹0" min="0" value="0" onchange="updateState()" />
+    </div>
+    <div id="additionalList"></div>
+    <button class="add-item-btn" onclick="addAdditionalCharge()">+ Add Charge</button>
+
+    <div class="s-section-head" style="margin-top:10px">Dates &amp; Events</div>
+    <div id="datesList"></div>
+    <button class="add-date-btn" onclick="addDate()">+ Add Date</button>
+
+    <div class="s-section-head" style="margin-top:10px">Things to Consider</div>
+    <div id="considerList"></div>
+    <button class="add-item-btn" onclick="addConsideration()">+ Add Section</button>
+
+    <button class="gen-btn" onclick="generate()">✦ Generate Quotation</button>
+
+    <div class="s-section-head" style="margin-top:10px">Saved Quotations</div>
+    <button class="add-date-btn" onclick="promptSaveQuotation()">💾 Save Current</button>
+    <div class="saved-section">
+      <div class="saved-list" id="savedList"></div>
+    </div>
+
+    <div class="field" style="margin-top:8px">
+      <label class="lbl">Import Quotation</label>
+      <input type="file" id="importFile" accept=".json" onchange="handleImportFile(this)" />
+    </div>
+
+  </aside>
+
+  <main class="preview" id="previewArea">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">💄</div>
+      <p>Add dates &amp; events on the left,<br />then click <em>Generate Quotation</em></p>
+    </div>
+  </main>
+
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
