@@ -654,8 +654,8 @@ textarea { resize: vertical; }
 }
 
 .r-logo {
-  width: 64px;
-  height: 64px;
+  width: 80px;
+  height: 80px;
   border-radius: 0;
   object-fit: contain;
   border: none;
@@ -663,7 +663,7 @@ textarea { resize: vertical; }
   flex-shrink: 0;
 }
 
-.r-date { font-size: 10px; color: var(--teal); margin-top: 2px; }
+.r-date { font-size: 10px; color: var(--teal); margin-top: 0.75px; }
 
 .r-client {
   background: #ffd9e1;
